@@ -1,0 +1,11 @@
+:host{
+
+}
+
+.option{
+    padding:5px;
+}
+
+.option.core-selected {
+    background: #eee;
+}

@@ -1,0 +1,28 @@
+{
+  "name": "PolymerJs-Todo",
+  "version": "0.0.1",
+  "homepage": "https://github.com/rohitghatol/PolymerJs-Todo",
+  "authors": [
+    "Rohit Ghatol <rohit.ghatol@synerzip.com>"
+  ],
+  "description": "Todo WebComponent built using Polymer.js",
+  "keywords": [
+    "todo",
+    "polymer.js",
+    "webcomponents",
+    "demo"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "polymer/polymer#~0.5.1",
+    "core-localstorage": "polymer/core-localstorage#~0.5.1",
+    "core-selector": "polymer/core-selector#~0.5.1"
+  }
+}

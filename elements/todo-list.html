@@ -1,0 +1,96 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="todo-element.html">
+<link rel="import" href="todo-textbox.html">
+<link rel="import" href="todo-controls.html">
+<polymer-element name="todo-list" attributes="items filter" on-change="{{onItemsChanged}}">
+    <template>
+        <link rel="stylesheet" href="todo-list.css">
+        <ul id="todo-list" vertical layout style="">
+            <input is="todo-textbox" on-commit="{{onTodoEnter}}" on-cancel="{{onTodoCancel}}" value="{{newTodo}}" >
+            <template repeat="{{item in filteredItems}}">
+                <li>
+                    <todo-element item="{{item}}" on-delete="{{onDelete}}" on-change="{{onTodoChanged}}"></todo-element>
+                </li>
+            </template>
+            <todo-controls id="controls" items="{{items}}" filter="{{filter}}" on-clear="{{clearCompletedItems}}"></todo-controls>
+        </ul>
+
+
+
+    </template>
+    <script>
+        Polymer({
+            filter:"all",
+            filterItems:function(items){
+                var self=this;
+                return items.filter(function(item){
+                    if(self.filter=="active"){
+                        return item.completed!=true;
+                    }
+                    else if(self.filter=="completed"){
+                        return item.completed==true;
+                    }
+                    else {
+                        return true;
+                    }
+
+                });
+            },
+            created:function(){
+                this.items=[]
+                this.filteredItems=[];
+            },
+            domReady:function(){
+                this.fire('change');
+            },
+            onTodoEnter:function(){
+                this.items.push({completed:false,text:this.newTodo});
+                this.newTodo="";
+                this.fire('change');
+
+            },
+            onTodoCancel:function(){
+                this.newTodo="";
+            },
+            onDelete:function(event,details,sender){
+                this.removeItem(event.target.templateInstance.model.item);
+                this.fire('change');
+            },
+            clearCompletedItems:function(){
+                for(var index=this.items.length;index>0;index--){
+                    var item = this.items[index-1];
+                    if(item.completed==true){
+                        this.removeItem(item);
+                    }
+                }
+                this.fire('change');
+            },
+            removeItem: function(item) {
+                var removeCounter = 0;
+
+                for (var index = 0; index < this.items.length; index++) {
+                    if (this.items[index] === item) {
+                        this.items.splice(index, 1);
+                        removeCounter++;
+                        index--;
+                    }
+                }
+                return removeCounter;
+            },
+            onTodoChanged:function(){
+                this.fire('change');
+            },
+            itemsChanged:function(){
+                this.fire('change');
+            },
+            filterChanged:function(oldValue,newValue){
+                this.fire('change');
+            },
+            onItemsChanged:function(){
+                this.filteredItems=this.filterItems(this.items);
+                this.$.controls.refresh();
+
+            }
+        });
+    </script>
+</polymer-element>

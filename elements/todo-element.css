@@ -1,0 +1,8 @@
+:host{
+    width:500px;
+}
+
+.completed{
+    color: #a9a9a9;
+    text-decoration: line-through;
+}

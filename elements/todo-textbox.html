@@ -1,0 +1,24 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<polymer-element name="todo-textbox" extends="input" on-keypress="{{onKeyPress}}" on-keyup="{{onKeyUp}}">
+
+    <script>
+        /* Since we will be using the todo-textbox multiple times we are using an immediate function */
+        (function(){
+            Polymer({
+                onKeyPress:function(event,details,sender){
+                    /* When User presses enter key */
+                    if(event.keyCode === 13){
+                        this.fire("commit");
+                    }
+                },
+                onKeyUp:function(event,details,sender){
+                    /* When User has hit Esc key*/
+                    if(event.keyCode === 27){
+                        this.fire("cancel");
+                    }
+                }
+            });
+        })();
+    </script>
+</polymer-element>

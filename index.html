@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Todo Web Component Demo</title>
+    <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <link rel="import" href="elements/todo-list.html">
+    <link rel="import" href="bower_components/core-localstorage/core-localstorage.html">
+</head>
+<body>
+    <polymer-element name="todo-app" noscript>
+        <template>
+            <todo-list filter="all" items="{{todos}}">
+
+            </todo-list>
+          <core-localstorage name="items" value="{{todos}}"/>
+        </template>
+    </polymer-element>
+
+    <todo-app></todo-app>
+
+
+
+</body>
+</html>

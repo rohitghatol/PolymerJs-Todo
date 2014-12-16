@@ -1,0 +1,45 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="todo-textbox.html">
+
+<polymer-element name="todo-element" attributes="item editing" on-blur="{{onCommit}}">
+    <template>
+        <link rel="stylesheet" href="todo-element.css">
+
+        <div on-dblclick="{{enterEditMode}}" hidden?={{editing}} layout horizontal>
+            <input type="checkbox" class="toggle" checked="{{item.completed}}" on-click="{{onToggleComplete}}">
+            <span flex class="view {{completedClass}}">{{item.text}}</span>
+            <button on-click="{{onDelete}}">x</button>
+        </div>
+        <div hidden?={{!editing}} layout horizontal>
+            <input flex is="todo-textbox" id="text" on-commit="{{onCommit}}" on-cancel="{{onCancel}}" value="{{item.text}}">
+        </div>
+    </template>
+    <script>
+        (function(){
+            Polymer('todo-element',{
+                completedClass:"",
+                editing:false,
+                enterEditMode:function(){
+                    this.editing=true;
+                    this.async(function(){
+                        this.$.text.focus();
+                    });
+                },
+                onCommit:function(){
+                    this.editing=false;
+                    this.fire('todoChanged');
+                },
+                onCancel:function(){
+                    this.editing=false;
+                },
+                onDelete:function(){
+                    this.fire("delete");
+                },
+                onToggleComplete:function(event,details,sender){
+                    this.completedClass=this.item.completed?"completed":"";
+                    this.fire('change');
+                }
+            });
+        })();
+    </script>
+</polymer-element>

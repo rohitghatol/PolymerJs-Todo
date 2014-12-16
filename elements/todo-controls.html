@@ -1,0 +1,53 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-selector/core-selector.html">
+
+<polymer-element name="todo-controls" attributes="items filter">
+    <template>
+        <link rel="stylesheet" href="todo-control.css">
+        <div class="todo-controls" horizontal layout center>
+            <span>{{remainingItems}} items(s) left</span>
+            <core-selector flex valueAttr="label" selected="{{filter}}" horizontal center-justified layout>
+                <span class="option" label="all">All</span>
+                <span class="option" label="active">Active</span>
+                <span class="option" label="completed">Completed</span>
+            </core-selector>
+
+            <button on-click="{{clearCompletedItems}}">Clear Completed ({{completedItems}}) </button>
+        </div>
+    </template>
+    <script>
+        (function(){
+            Polymer('todo-controls',{
+                completedItems:0,
+                remainingItems:0,
+                created:function(){
+                    this.filter="all";
+                    this.items=[];
+                },
+                domReady:function(){
+                    this.refresh();
+                },
+                countRemainingItems:function(items){
+                    var self=this;
+                    self.completedItems=0;
+                    self.remainingItems=0;
+                    items.forEach(function(item,index){
+                        if(item.completed == true){
+                            self.completedItems++;
+                        }
+                        else{
+                            self.remainingItems++;
+                        }
+                    });
+
+                },
+                refresh:function(){
+                    this.countRemainingItems(this.items);
+                },
+                clearCompletedItems:function(){
+                    this.fire('clear');
+                }
+            });
+        })();
+    </script>
+</polymer-element>
