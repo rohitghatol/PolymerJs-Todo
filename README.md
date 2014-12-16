@@ -11,5 +11,5 @@ The Todo Sample App is built using numerous components
 
 ## Screenshot
 
-*Todo App*
+### Todo App
 ![alt tag](https://raw.githubusercontent.com/rohitghatol/PolymerJs-Todo/master/Todo-Sample.png)
